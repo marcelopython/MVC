@@ -19,4 +19,4 @@ $obRouter->get('/', [
 /*Imprime o response da pagina*/
 $obRouter->run()->sendResponse();
 
-echo memory_get_peak_usage();
+echo memory_get_peak_ussage();

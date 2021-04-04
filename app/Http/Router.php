@@ -63,6 +63,24 @@ class Router
         $this->addRoute('GET', $route, $params);
     }
 
+    /**Método responsável por definir uma rota de POST*/
+    public function post(string $route, array $params = []): void
+    {
+        $this->addRoute('POST', $route, $params);
+    }
+
+    /**Método responsável por definir uma rota de put*/
+    public function put(string $route, array $params = []): void
+    {
+        $this->addRoute('PUT', $route, $params);
+    }
+
+    /**Método responsável por definir uma rota de delete*/
+    public function delete(string $route, array $params = []): void
+    {
+        $this->addRoute('DELETE', $route, $params);
+    }
+
     /**Método Responsavel por retornar a  URI desconsidereando o prefixo*/
     private function getUri(): string
     {
@@ -81,16 +99,44 @@ class Router
     {
         //Uri
         $uri = $this->getUri();
+
+        //Method
+        $httpMethod = $this->request->getHttpMethod();
+
+        //Valida as rotas
+        foreach($this->routes as $patternRoute => $method){
+            //Verifica se a uri bate com o padrão
+            if(preg_match($patternRoute, $uri)){
+                //Verifica o método
+                if(!empty($method[$httpMethod])){
+                    //Retorno dos parametros da rota
+                    return $method[$httpMethod];
+                }
+                //Metodo não permitido
+                throw  new Exception('Método não permitido', 405);
+            }
+        }
+        //Url não encontrada
+        throw  new Exception('URL não encontrada', 405);
     }
 
     /**Método responsável por executar a rota atual*/
-    public function run(): Response
+    public function run()
     {
         try{
             //Obtem a rota atual
             $route = $this->getRoute();
 
+            //Verifica o controlador
+            if(!isset($route['controller'])){
+                throw  new Exception('A url não pôde ser processada', 500);
+            }
 
+            //Argumentos da função
+            $args = [];
+
+            //Retorna a execução da função
+            return call_user_func_array($route['controller'], $args);
         }catch(Exception $e){
             return new Response($e->getCode(), $e->getMessage());
         }
