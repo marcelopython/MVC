@@ -2,19 +2,17 @@
 
 require __DIR__.'/vendor/autoload.php';
 
-use App\Controller\Pages\Home;
-
 define('URL', 'http://localhost/mvc');
 
+//Defini o valor padrão das variáveis
+\App\Utils\View::init([
+    'URL'=>URL
+]);
 
 $obRouter = new \App\Http\Router(URL);
 
-
-$obRouter->get('/', [
-    function(){
-        return new \App\Http\Response(200, Home::getHome());
-    }
-]);
+//Inclue as rotas de paginas
+include __DIR__.'/routes/pages.php';
 
 /*Imprime o response da pagina*/
 $obRouter->run()->sendResponse();
