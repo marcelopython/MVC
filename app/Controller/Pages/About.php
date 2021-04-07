@@ -8,7 +8,7 @@ use App\Utils\View;
 class About extends Page
 {
 
-    /*Metodo responsável por retornar o conteudp (view) da home*/
+    /*Metodo responsável por retornar o conteudo (view) de sobre*/
     public static function getAbout(): string
     {
         $obOrganization = new Organization();
