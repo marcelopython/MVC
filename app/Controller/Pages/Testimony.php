@@ -1,15 +1,42 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: msr
- * Date: 07/04/21
- * Time: 21:07
- */
 
 namespace App\Controller\Pages;
 
 
-class Testimony
+use App\Utils\View;
+use App\Model\Entity\Testimony as EntityTestimony;
+
+class Testimony extends Page
 {
+
+    /**
+     * Metodo responsável por retornar o conteudp (view) de depoimentos
+     * */
+    public static function getTestimonies(): string
+    {
+        $content = View::render('pages/testimonies', []);
+        //Retorna a view da página
+        return parent::getPage('Depoimentos', $content);
+    }
+
+    /**
+     * Metodo responsável por cadastrar um depoimento
+     * @param $request
+     */
+    public static function insertTestimony($request): string
+    {
+        //Dados do post
+        $postVars = $request->getPostVars();
+        //print_r($postVars); exit;
+
+        //Nova instancia de depoimento
+        $testimony = new EntityTestimony();
+        $testimony->nome = $postVars['nome'];
+        $testimony->message = $postVars['mensagem'];
+        $testimony->cadastrar();
+        
+        //Retorna a view de depoimentos
+        return self::getTestimonies();
+    }
 
 }

@@ -1,8 +1,11 @@
 <?php
 
 use \App\Http\Response;
-use App\Controller\Pages\Home;
-use \App\Controller\Pages\About;
+use App\Controller\Pages\ {
+    Home,
+    About,
+    Testimony
+};
 
 
 //Rota de home
@@ -19,9 +22,18 @@ $obRouter->get('/sobre', [
     }
 ]);
 
-//Rota dinámica
-$obRouter->get('/pagina/{idPagina}', [
-    function($idPagina){
-        return new Response(200, 'Pagina '.$idPagina);
+
+//Rota de depoimentos
+$obRouter->get('/depoimentos', [
+    function(){
+        return new Response(200, Testimony::getTestimonies());
+    }
+]);
+
+
+//Rota de depoimentos insert
+$obRouter->post('/depoimentos', [
+    function($request){
+        return new Response(200, Testimony::insertTestimony($request));
     }
 ]);
