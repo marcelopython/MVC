@@ -24,10 +24,9 @@ class Testimony
     /**
      * Data da criação do depoimentos
      */
-    public \DateTime $data;
+    public  $data;
 
     /**
-
    * Metodo responsável por cadastrar a instancia atual no bando de dados
    */
   public function cadastrar()
@@ -39,5 +38,14 @@ class Testimony
           'nome'=>$this->nome, 'message'=>$this->message, 'data'=>$this->data->format('Y-m-d H:i:s')
       ]);
       return $this;
+    }
+
+    /**
+    *Método responsável por retornar Depoimentos
+    */
+    public static function getTestimoniesItems($where = null, $order = null,
+    $limit = null, $fields = '*'): \PDOStatement
+    {
+        return (new Database('depoimentos'))->select($where, $order, $limit, $fields);
     }
 }
