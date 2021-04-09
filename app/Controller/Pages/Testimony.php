@@ -10,7 +10,8 @@ class Testimony extends Page
 {
 
     /**
-    *Metodo responsável por obter a rendereização dos items de depoimentos para a pagina
+    *Metodo responsável por obter a rendereização dos items de depoimentos
+    *para a pagina
     */
     private static function getTestimoniesItems(): string
     {
@@ -25,7 +26,6 @@ class Testimony extends Page
               'message'=>$testimony->message
             ]);
         }
-
         return $items;
     }
 
@@ -49,7 +49,6 @@ class Testimony extends Page
     {
         //Dados do post
         $postVars = $request->getPostVars();
-        //print_r($postVars); exit;
 
         //Nova instancia de depoimento
         $testimony = new EntityTestimony();
