@@ -14,7 +14,7 @@ class Testimony extends Page
     *Metodo responsável por obter a rendereização dos items de depoimentos
     *para a pagina
     */
-    private static function getTestimoniesItems($request): string
+    private static function getTestimoniesItems($request, &$pagination): string
     {
         //depoimentos
         $items = '';
@@ -48,7 +48,8 @@ class Testimony extends Page
     public static function getTestimonies($request): string
     {
         $content = View::render('pages/testimonies', [
-          'items'=>self::getTestimoniesItems($request)
+          'items'=>self::getTestimoniesItems($request, $pagination),
+          'pagination'=>parent::getPagination($request, $pagination)
         ]);
         //Retorna a view da página
         return parent::getPage('Depoimentos', $content);
