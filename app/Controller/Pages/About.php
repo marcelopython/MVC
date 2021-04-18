@@ -14,7 +14,9 @@ class About extends Page
         $obOrganization = new Organization();
         //View de sobre
         $content = View::render('pages/about', [
-            'name'=>$obOrganization->name, 'description'=>$obOrganization->description, 'site'=>$obOrganization->site
+            'name'=>$obOrganization->name,
+            'description'=>$obOrganization->description,
+            'site'=>$obOrganization->site
         ]);
         //Retorna a view da página
         return parent::getPage('Sobre', $content);
